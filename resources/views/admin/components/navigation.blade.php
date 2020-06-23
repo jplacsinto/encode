@@ -9,7 +9,7 @@
    <span class="navbar-toggler-icon"></span>
    </button>
    <span class="navbar-text w-100 px-3 small">
-   V1.0
+   V0.1.0
    </span>
    <!-- <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search"> -->
    <div class="btn-group px-3">
