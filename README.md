@@ -1,2 +1,2 @@
 # Encode
-Content management system using laravel 7
+A content management system using the newest verison of laravel (Laravel - 7)
