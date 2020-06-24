@@ -4,7 +4,7 @@
 
 
       <li class="nav-item">
-        <a class="nav-link active" href="{{ route('admin.articles.index') }}">
+        <a class="nav-link active" href="{{ route('articles.index') }}">
           <span data-feather="list"></span>
           Articles
         </a>

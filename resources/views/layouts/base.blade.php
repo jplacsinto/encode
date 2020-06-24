@@ -146,12 +146,12 @@
 <body>
     <div id="app">
     
-      @include('admin.components.navigation')
+      @include('components.navigation')
 
     <div class="container-fluid">
       <div class="row">
         
-        @include('admin.components.sidebar-menu')
+        @include('components.sidebar-menu')
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 pt-3">
             @yield('content')

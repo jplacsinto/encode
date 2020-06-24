@@ -1,4 +1,4 @@
-@extends('admin.layouts.base')
+@extends('layouts.base')
 
 @section('content')
 
@@ -9,7 +9,7 @@
 
     <div class="card-body">
 
-        <a href="{{ route('admin.users.index') }}" type="submit" class="btn btn-light mb-3">
+        <a href="{{ route('users.index') }}" type="submit" class="btn btn-light mb-3">
             <span data-feather="chevron-left"></span>
         Back</a>
 
@@ -19,7 +19,7 @@
                 </div>
             @endif
 
-          <form action="{{route('admin.users.store')}}" method="POST">
+          <form action="{{route('users.store')}}" method="POST">
             @csrf
 
             <div class="form-group row">
