@@ -1,4 +1,4 @@
-@extends('admin.layouts.base')
+@extends('layouts.base')
 
 @section('content')
 
@@ -7,12 +7,12 @@
 
   <div class="col">
     <h1 class="h2">Users
-      <a href="{{route('admin.users.create')}}" type="button" class="btn btn-outline-primary ml-3">Create New</a>
+      <a href="{{route('users.create')}}" type="button" class="btn btn-outline-primary ml-3">Create New</a>
     </h1> 
   </div>
 
   <div class="col">
-    <form class="input-group mb-3" method="GET" action="{{route('admin.users.index')}}">
+    <form class="input-group mb-3" method="GET" action="{{route('users.index')}}">
     {{ Form::text('search', request('search'), ['class' => 'form-control', 'placeholder'=>"Search name or email"]) }}
    <div class="input-group-append">
       <button class="btn btn-outline-secondary" type="submit"><span data-feather="search"></span> Search</button>
@@ -81,8 +81,8 @@
               @endforeach
            </td>
            <td class="text-right">
-              <a class="btn btn-primary btn-sm mr-1" href="{{ route('admin.users.edit', $user->id) }}" role="button">Edit</a>
-              <button onclick="$('#confirmDelete').attr('action', '{{ route('admin.users.destroy', $user->id) }}');" type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delCon">
+              <a class="btn btn-primary btn-sm mr-1" href="{{ route('users.edit', $user->id) }}" role="button">Edit</a>
+              <button onclick="$('#confirmDelete').attr('action', '{{ route('users.destroy', $user->id) }}');" type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delCon">
               Delete
               </button>
            </td>

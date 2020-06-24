@@ -1,4 +1,4 @@
-@extends('admin.layouts.base')
+@extends('layouts.base')
 
 @section('content')
 
@@ -10,7 +10,7 @@
 
     <div class="card-body">
 
-        <a href="{{ route('admin.users.index') }}" type="submit" class="btn btn-light mb-3">
+        <a href="{{ route('users.index') }}" type="submit" class="btn btn-light mb-3">
             <span data-feather="chevron-left"></span>
             Back
         </a>
@@ -25,7 +25,7 @@
 
             
 
-          <form action="{{route('admin.users.update', $user)}}" method="POST">
+          <form action="{{route('users.update', $user)}}" method="POST">
             @csrf
             {{ method_field('PUT') }}
 

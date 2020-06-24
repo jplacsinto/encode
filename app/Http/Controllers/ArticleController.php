@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -32,7 +32,7 @@ class ArticleController extends Controller
 
         $articles = [];
 
-        return view('admin.articles.index')->with('users', $articles);
+        return view('modules.articles.index')->with('users', $articles);
     }
 
     /**

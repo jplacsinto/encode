@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\User;
@@ -41,7 +41,7 @@ class UsersController extends Controller
 
         $users = $users->orderBy($col, $sort)->paginate($rows);
 
-        return view('admin.users.index')->with('users', $users);
+        return view('modules.users.index')->with('users', $users);
     }
 
     /**
@@ -53,7 +53,7 @@ class UsersController extends Controller
     {
         $roles = Role::all();
 
-        return view('admin.users.create')->with([
+        return view('modules.users.create')->with([
             'roles' => $roles
         ]);
     }
@@ -75,7 +75,7 @@ class UsersController extends Controller
 
         $user->roles()->attach($request->roles);
 
-        return redirect()->route('admin.users.index')->with('message', 'New user created');
+        return redirect()->route('users.index')->with('message', 'New user created');
     }
 
     /**
@@ -99,12 +99,12 @@ class UsersController extends Controller
     {
 
         /*if(Gate::denies('edit-users')){
-            return redirect()->route('admin.users.index');
+            return redirect()->route('users.index');
         }
 */
         $roles = Role::all();
 
-        return view('admin.users.edit')->with([
+        return view('modules.users.edit')->with([
             'user' => $user,
             'roles' => $roles
         ]);

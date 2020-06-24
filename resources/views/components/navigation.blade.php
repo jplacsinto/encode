@@ -18,9 +18,9 @@
       {{ Auth::user()->name }}
       </button>
       <div class="dropdown-menu dropdown-menu-lg-right">
-         <a href="{{ route('admin.users.edit', Auth::user()) }}" class="dropdown-item" type="button">Edit Account</a>
+         <a href="{{ route('users.edit', Auth::user()) }}" class="dropdown-item" type="button">Edit Account</a>
          @can('manage-users')
-         <a href="{{ route('admin.users.index') }}" class="dropdown-item" type="button">Manage Users</a>
+         <a href="{{ route('users.index') }}" class="dropdown-item" type="button">Manage Users</a>
          @endcan
          <div class="dropdown-divider"></div>
          <a class="dropdown-item" href="{{ route('logout') }}"

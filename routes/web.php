@@ -14,21 +14,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect()->route('admin.articles.index');
-    //return view('welcome');
-});
-
-Route::get('/admin', function () {
-    return redirect()->route('admin.articles.index');
+    return redirect()->route('articles.index');
     //return view('welcome');
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
 
 
-Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('auth')->group(function(){
+Route::middleware('auth')->group(function(){
 
 	Route::resource('articles', 'ArticleController')->middleware('can:manage-articles');
 	Route::resource('users', 'UsersController')->middleware('can:manage-users');
