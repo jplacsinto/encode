@@ -5,15 +5,16 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Route;
 
-class ModuleCrudGenerator extends Command
+class ModuleApiCrudGenerator extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'module:make
+    protected $signature = 'make:module:api
         {name : Class (singular) for example User}';
 
     /**
@@ -69,7 +70,10 @@ class ModuleCrudGenerator extends Command
         $this->model($name);
         $this->request($name);
 
-        File::append(base_path('routes/api.php'), 'Route::resource(\'' . Str::plural(strtolower($name)) . "', '{$name}Controller');");
+        $routeName = Str::plural(strtolower($name));
+
+        if(!Route::has($routeName.".index"))
+           File::append(base_path('routes/api.php'), 'Route::resource(\'' . $routeName . "', '{$name}Controller');");
     }
 
     protected function controller($name)
