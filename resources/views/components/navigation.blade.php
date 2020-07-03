@@ -8,9 +8,15 @@
    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
    <span class="navbar-toggler-icon"></span>
    </button>
-   <span class="navbar-text w-100 px-3 small">
-   V0.1.0
-   </span>
+   <div class="navbar-text w-100 px-3 small">
+      @if  (!app()->environment('production'))
+      <span class="badge badge-warning mr-2">
+         {{app()->environment()}} Environment
+      </span>
+      @endif
+      <span>V0.1.0</span>
+   </div>
+   
    <!-- <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search"> -->
    <div class="btn-group px-3">
       <button type="button" class="btn btn-sm btn-secondary dropdown-toggle" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
@@ -26,7 +32,7 @@
          <a class="dropdown-item" href="{{ route('logout') }}"
             onclick="event.preventDefault();
             document.getElementById('logout-form').submit();">
-         {{ __('Logout') }}
+            {{ __('Logout') }}
          </a>
          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
             @csrf
