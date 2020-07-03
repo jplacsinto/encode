@@ -40,7 +40,7 @@
 
       <div class="d-flex flex-row  align-items-center">
       <span class="small mr-1">Show</span>
-      <select id="showRows" class="form-control" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+      <select class="show-rows form-control" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
          <option {{ request('rows') == 10 ? 'selected':'' }}  value="{{ add_query_params(['rows'=>10]) }}">10</option>
          <option {{ request('rows') == 30 ? 'selected':'' }} value="{{ add_query_params(['rows'=>30]) }}">30</option>
          <option {{ request('rows') == 50 ? 'selected':'' }} value="{{ add_query_params(['rows'=>50]) }}">50</option>
@@ -59,7 +59,7 @@
 
 
 
-  <table class="table table-bordered table-sm table-responsive-lg table-hover">
+  <table class="table table-responsive-lg table-hover">
      <thead>
         <tr>
            <th scope="col">Id</th>
@@ -99,7 +99,7 @@
 
       <div class="d-flex flex-row  align-items-center">
       <span class="small mr-1">Show</span>
-      <select id="showRows" class="form-control" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+      <select class="show-rows form-control" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
          <option {{ request('rows') == 10 ? 'selected':'' }}  value="{{ add_query_params(['rows'=>10]) }}">10</option>
          <option {{ request('rows') == 30 ? 'selected':'' }} value="{{ add_query_params(['rows'=>30]) }}">30</option>
          <option {{ request('rows') == 50 ? 'selected':'' }} value="{{ add_query_params(['rows'=>50]) }}">50</option>

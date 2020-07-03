@@ -141,6 +141,10 @@
           border-color: transparent;
           box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
         }
+
+        .show-rows {
+          width:65px;
+        }
     </style>
 </head>
 <body>
