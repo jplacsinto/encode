@@ -50,17 +50,17 @@ class ModuleCrudGenerator extends Command
 
         $files = [];
 
-        $files[] = $this->controllerPath = app_path("/Http/Controllers/{$name}Controller.php");
-        $files[] = $this->modelPath = app_path("/Models/{$name}.php");
-        $files[] = $this->requestPath = app_path("/Http/Requests/{$name}Request.php");
+        $files[] = $this->controllerPath = app_path("\Http\Controllers\\{$name}Controller.php");
+        $files[] = $this->modelPath = app_path("\Models\\{$name}.php");
+        $files[] = $this->requestPath = app_path("\Http\Requests\\{$name}Request.php");
 
         $migrationDate = date('Y_m_d');
-        $files[] = $this->migrationPath = database_path("migrations/{$migrationDate}_000000_create_{$this->modelNamePluralLowerCase}_table.php");
+        $files[] = $this->migrationPath = database_path("migrations\\{$migrationDate}_000000_create_{$this->modelNamePluralLowerCase}_table.php");
 
-        $this->viewPath = resource_path("views/modules/{$this->modelNamePluralLowerCase}");
-        $files[] = $this->viewPath."/index.blade.php";
-        $files[] = $this->viewPath."/create.blade.php";
-        $files[] = $this->viewPath."/edit.blade.php";
+        $this->viewPath = resource_path("views\modules\\{$this->modelNamePluralLowerCase}");
+        $files[] = $this->viewPath."\index.blade.php";
+        $files[] = $this->viewPath."\create.blade.php";
+        $files[] = $this->viewPath."\edit.blade.php";
 
         $this->checkFileIfExists($files);
 
@@ -70,10 +70,19 @@ class ModuleCrudGenerator extends Command
         $this->migration($name);
         $this->view($name);
 
+        foreach($files as $file){
+            $this->info($file.' successfully created.');
+        }
+
         $routeName = Str::plural(strtolower($name));
 
-        if(!Route::has($routeName.".index"))
-           File::append(base_path('routes/web.php'), 'Route::resource(\'' . $routeName . "', '{$name}Controller');");
+        if(!Route::has($routeName.".index")){
+            File::append(base_path('routes/web.php'), 'Route::resource(\'' . $routeName . "', '{$name}Controller');");
+            $this->info('New route resource successfully added.');
+        }
+           
+
+
     }
 
     protected function controller($name)
@@ -161,46 +170,67 @@ class ModuleCrudGenerator extends Command
     {
         $columns = $this->option('columns');
 
-        $createInputFields = '';
-        $editInputFields = '';
+        $createInputFields = $editInputFields = $indexColumnHeaders =  $indexColumns = '';
 
-        if(!empty($columns)){
 
-            $columnsArr = explode('|', $columns);
+        $columnsArr = explode('|', $columns);
 
-            $columns = null;
+        $columns = null;
 
-            foreach($columnsArr as $column){
-                if (($pos = strpos($column, ":")) !== FALSE) { 
-                    $fieldType = substr($column, 0, $pos); 
-                    $fieldName = substr($column, $pos+1); 
+        foreach($columnsArr as $column){
+            if (($pos = strpos($column, ":")) !== FALSE) { 
+                $fieldType = substr($column, 0, $pos); 
+                $fieldName = substr($column, $pos+1); 
 
-                    $createInputFields .= str_replace(
-                        [
-                            '{{fieldNameLowerCase}}',
-                            '{{fieldNameUpperCase}}'
-                        ],
-                        [
-                            strtolower($fieldName),
-                            ucfirst($fieldName)
-                        ],
-                        $this->getStub('views/create-input.blade')
-                    );
+                $createInputFields .= str_replace(
+                    [
+                        '{{fieldNameLowerCase}}',
+                        '{{fieldNameUpperCase}}'
+                    ],
+                    [
+                        strtolower($fieldName),
+                        ucfirst($fieldName)
+                    ],
+                    $this->getStub('views/create-input.blade')
+                );
 
-                    $editInputFields .= str_replace(
-                        [
-                            '{{fieldNameLowerCase}}',
-                            '{{fieldNameUpperCase}}',
-                            '{{modelNameLowerCase}}'
-                        ],
-                        [
-                            strtolower($fieldName),
-                            ucfirst($fieldName),
-                            strtolower($name)
-                        ],
-                        $this->getStub('views/edit-input.blade')
-                    );
-                }
+                $editInputFields .= str_replace(
+                    [
+                        '{{fieldNameLowerCase}}',
+                        '{{fieldNameUpperCase}}',
+                        '{{modelNameLowerCase}}'
+                    ],
+                    [
+                        strtolower($fieldName),
+                        ucfirst($fieldName),
+                        strtolower($name)
+                    ],
+                    $this->getStub('views/edit-input.blade')
+                );
+
+                $indexColumnHeaders .= "\n" . str_replace(
+                    [
+                        '{{modelNameLowerCase}}',
+                        '{{fieldType}}'
+                    ],
+                    [
+                        strtolower($name),
+                        $fieldType
+                    ],
+                    $this->getStub('views/index-column-headers.blade')
+                );
+
+                $indexColumns .= "\n" . str_replace(
+                    [
+                        '{{modelNameLowerCase}}',
+                        '{{fieldName}}'
+                    ],
+                    [
+                        strtolower($name),
+                        $fieldName
+                    ],
+                    $this->getStub('views/index-column.blade')
+                );
             }
         }
 
@@ -209,13 +239,17 @@ class ModuleCrudGenerator extends Command
                 '{{modelName}}',
                 '{{modelNameTitle}}',
                 '{{modelNameLowerCase}}',
-                '{{modelNamePluralLowerCase}}'
+                '{{modelNamePluralLowerCase}}',
+                '{{indexColumnHeaders}}',
+                '{{indexColumns}}'
             ],
             [
                 $name,
                 ucfirst($this->modelNamePluralLowerCase),
                 strtolower($name),
-                $this->modelNamePluralLowerCase
+                $this->modelNamePluralLowerCase,
+                $indexColumnHeaders,
+                $indexColumns
             ],
             $this->getStub('views/index.blade')
         );
