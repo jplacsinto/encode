@@ -1,1 +1,1 @@
-<th>{{ ucfirst(${{modelNameLowerCase}}->{{fieldType}}) }}</th>
+<th>{{ ucfirst('{{fieldName}}') }}</th>

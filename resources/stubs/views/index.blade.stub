@@ -44,7 +44,9 @@
     <thead>
       <tr>
         <th scope="col">Id</th>
-        {{indexColumnHeaders}}
+        @foreach(${{modelNamePluralLowerCase}} as ${{modelNameLowerCase}})
+          {{indexColumnHeaders}}
+        @endforeach
         <th scope="col"></th>
       </tr>
     </thead>

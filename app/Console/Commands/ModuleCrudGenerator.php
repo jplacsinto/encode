@@ -211,13 +211,13 @@ class ModuleCrudGenerator extends Command
                 $indexColumnHeaders .= "\n" . str_replace(
                     [
                         '{{modelNameLowerCase}}',
-                        '{{fieldType}}'
+                        '{{fieldName}}'
                     ],
                     [
                         strtolower($name),
-                        $fieldType
+                        $fieldName
                     ],
-                    $this->getStub('views/index-column-headers.blade')
+                    $this->getStub('views/index-column-header.blade')
                 );
 
                 $indexColumns .= "\n" . str_replace(
