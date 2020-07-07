@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Hash;
 
 use Gate;
@@ -64,13 +65,14 @@ class UsersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make('password'),
+            'active' => $request->has('active')
         ]);
 
         $user->roles()->attach($request->roles);
@@ -117,12 +119,13 @@ class UsersController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(UserRequest $request, User $user)
     {
         $user->roles()->sync($request->roles);
 
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->active = $request->has('active');
         $user->save();
 
         return redirect()->back()->with('success', true);

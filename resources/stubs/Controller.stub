@@ -4,42 +4,63 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\{{modelName}}Request;
 use App\Models\{{modelName}};
+use Illuminate\Http\Request;
 
 class {{modelName}}Controller extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        ${{modelNamePluralLowerCase}} = {{modelName}}::latest()->get();
 
-        return response()->json(${{modelNamePluralLowerCase}}, 201);
+        $search = $request->get('search', null);
+
+        $col = $request->get('col', 'id');
+
+        $sort = $request->get('sort', 'desc');
+
+        $rows = $request->get('rows', 10);
+
+        ${{modelNamePluralLowerCase}} = new {{modelName}};
+
+        if(!is_null($search)){
+            ${{modelNamePluralLowerCase}} = ${{modelNamePluralLowerCase}}->where('name', 'LIKE', "%{$search}%")->orWhere('email', 'LIKE', "%{$search}%");
+        }
+
+        ${{modelNamePluralLowerCase}} = ${{modelNamePluralLowerCase}}->orderBy($col, $sort)->paginate($rows);
+
+        return view('modules.{{modelNamePluralLowerCase}}.index')->with('{{modelNamePluralLowerCase}}', ${{modelNamePluralLowerCase}});
+    }
+
+    public function create()
+    {
+        return view('modules.{{modelNamePluralLowerCase}}.create');
     }
 
     public function store({{modelName}}Request $request)
     {
         ${{modelNameSingularLowerCase}} = {{modelName}}::create($request->all());
 
-        return response()->json(${{modelNameSingularLowerCase}}, 201);
+        return redirect()->route('{{modelNamePluralLowerCase}}.index')->with('message', 'New {{modelNameSingularLowerCase}} created');
     }
 
-    public function show($id)
+    public function edit({{modelName}} ${{modelNameSingularLowerCase}})
     {
-        ${{modelNameSingularLowerCase}} = {{modelName}}::findOrFail($id);
+
+        return view('modules.{{modelNamePluralLowerCase}}.edit')->with('{{modelNameSingularLowerCase}}', ${{modelNameSingularLowerCase}});
 
         return response()->json(${{modelNameSingularLowerCase}});
     }
 
-    public function update({{modelName}}Request $request, $id)
+    public function update({{modelName}}Request $request, {{modelName}} ${{modelNameSingularLowerCase}})
     {
-        ${{modelNameSingularLowerCase}} = {{modelName}}::findOrFail($id);
         ${{modelNameSingularLowerCase}}->update($request->all());
 
-        return response()->json(${{modelNameSingularLowerCase}}, 200);
+        return redirect()->back()->with('success', true);
     }
 
-    public function destroy($id)
+    public function destroy({{modelName}} ${{modelNameSingularLowerCase}})
     {
-        {{modelName}}::destroy($id);
+        ${{modelNameSingularLowerCase}}->delete();
 
-        return response()->json(null, 204);
+        return redirect()->back()->with('message', '{{modelName}} successfully deleted');
     }
 }

@@ -24,10 +24,6 @@ class ModuleApiCrudGenerator extends Command
      */
     protected $description = 'Crud generator on the fly';
 
-    protected $controllerDir;
-    protected $modelDir;
-    protected $requestDir;
-
     /**
      * Create a new command instance.
      *
@@ -89,7 +85,7 @@ class ModuleApiCrudGenerator extends Command
                 strtolower(Str::plural($name)),
                 strtolower($name)
             ],
-            $this->getStub('Controller')
+            $this->getStub('ApiController')
         );
 
         file_put_contents($this->controllerPath, $controllerTemplate);

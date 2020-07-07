@@ -24,7 +24,7 @@
                     <div class="form-group row">
                         <label for="email" class="col-sm-2 col-form-label">Email</label>
                         <div class="col-sm-10">
-                            <input placeholder="Enter email" id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email', $user->email) }}" required autocomplete="email" autofocus>
+                            <input placeholder="Enter email" id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email', $user->email) }}" autocomplete="email" autofocus>
                             @error('email')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -35,12 +35,21 @@
                     <div class="form-group row">
                         <label for="name" class="col-sm-2 col-form-label">Name</label>
                         <div class="col-sm-10">
-                            <input id="name" placeholder="Enter name" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name', $user->name) }}" required autocomplete="name" autofocus>
+                            <input id="name" placeholder="Enter name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name', $user->name) }}" autocomplete="name" autofocus>
                             @error('name')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                             @enderror
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="roles" class="col-sm-2 col-form-label">Status</label>
+                        <div class="col-sm-10">
+                            <div class="custom-control custom-switch my-2">
+                            <input @if($user->active) checked @endif name="active" value="true" type="checkbox" class="custom-control-input" id="active" />
+                                <label class="custom-control-label" for="active">Active</label>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group row">
