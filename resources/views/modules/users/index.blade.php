@@ -54,7 +54,7 @@
     <tbody>
       @foreach($users as $user)
       <tr>
-        <th scope="row">{{ $user->id }}</th>
+        <td>{{ $user->id }}</td>
         <td>{{ $user->name }}</td>
         <td>{{ $user->email }}</td>
         <td><span class="badge badge-{{$user->active ? "success":"secondary"}}">{{ $user->active ? "Active":"Deactivated" }}</span></td>
