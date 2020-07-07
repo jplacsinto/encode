@@ -46,6 +46,7 @@
         <th scope="col">Id</th>
         <th scope="col">Name</th>
         <th scope="col">Email</th>
+        <th scope="col">Status</th>
         <th scope="col">Roles</th>
         <th scope="col"></th>
       </tr>
@@ -56,6 +57,7 @@
         <th scope="row">{{ $user->id }}</th>
         <td>{{ $user->name }}</td>
         <td>{{ $user->email }}</td>
+        <td><span class="badge badge-{{$user->active ? "success":"secondary"}}">{{ $user->active ? "Active":"Deactivated" }}</span></td>
         <td>
           @foreach($user->roles as $role)
           <span class="badge badge-info">{{ $role->name }}</span>
