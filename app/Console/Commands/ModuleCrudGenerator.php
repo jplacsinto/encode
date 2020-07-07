@@ -16,7 +16,7 @@ class ModuleCrudGenerator extends Command
      */
     protected $signature = 'make:module
         {name : Class (singular) for example User}
-        {--columns=string:name : database table fields}';
+        {--fields=string:name : database table fields}';
 
     /**
      * The console command description.
@@ -132,7 +132,7 @@ class ModuleCrudGenerator extends Command
     protected function migration($name)
     {
 
-        $columns = $this->option('columns');
+        $columns = $this->option('fields');
 
         if(!empty($columns)){
 
@@ -143,8 +143,44 @@ class ModuleCrudGenerator extends Command
             foreach($columnsArr as $column){
                 if (($pos = strpos($column, ":")) !== FALSE) { 
                     $fieldType = substr($column, 0, $pos); 
-                    $fieldName = substr($column, $pos+1); 
-                    $columns .= '$table->'.$fieldType."('$fieldName');";
+                    $fieldName = substr($column, $pos+1);
+
+                    if (($pos = strpos($fieldName, "[")) !== FALSE) {
+                        $newFieldName = substr($fieldName, 0, $pos);
+                        $fieldParams = substr($fieldName, $pos+1, -1);
+
+                        $fieldName = $newFieldName;
+
+                        $newColumn = '$table->'.$fieldType."('$fieldName')";
+
+                        $fieldParams = explode(',', $fieldParams);
+
+                        $nullable = !in_array('required', $fieldParams) ? "->nullable()" : "";
+                        $defaultValue = "";
+
+                        foreach ($fieldParams as $param){
+
+                            if (($pos = strpos($param, ":")) !== FALSE) {
+                                $paramName = substr($param, 0, $pos);
+                                $paramValue = substr($param, $pos+1);
+
+                                if($paramName == 'default'){
+                                    $defaultValue = "->default({$paramValue})";
+                                    $nullable = "";
+                                }
+
+                            }
+                        }
+
+                        $newColumn .= "{$defaultValue}";
+                        $newColumn .= "{$nullable}";
+                        $newColumn .= ";\n";
+
+                    }else{
+                        $newColumn = '$table->'.$fieldType."('$fieldName')->nullable();\n";
+                    }
+
+                    $columns .= $newColumn;
                 }
             }
         }
@@ -168,7 +204,7 @@ class ModuleCrudGenerator extends Command
 
     protected function view($name)
     {
-        $columns = $this->option('columns');
+        $columns = $this->option('fields');
 
         $createInputFields = $editInputFields = $indexColumnHeaders =  $indexColumns = '';
 
