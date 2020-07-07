@@ -44,6 +44,15 @@
                         </div>
                     </div>
                     <div class="form-group row">
+                        <label for="roles" class="col-sm-2 col-form-label">Status</label>
+                        <div class="col-sm-10">
+                            <div class="custom-control custom-switch my-2">
+                            <input @if($user->active) checked @endif name="active" value="true" type="checkbox" class="custom-control-input" id="active" />
+                                <label class="custom-control-label" for="active">Active</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
                         <label for="roles" class="col-sm-2 col-form-label">Roles</label>
                         <div class="col-sm-10">
                             @foreach($roles as $role)

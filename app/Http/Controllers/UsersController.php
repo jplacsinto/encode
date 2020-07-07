@@ -72,6 +72,7 @@ class UsersController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make('password'),
+            'active' => $request->has('active')
         ]);
 
         $user->roles()->attach($request->roles);
@@ -124,6 +125,7 @@ class UsersController extends Controller
 
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->active = $request->has('active');
         $user->save();
 
         return redirect()->back()->with('success', true);
