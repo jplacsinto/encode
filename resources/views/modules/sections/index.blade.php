@@ -22,6 +22,7 @@
   </div>
   @endif
   
+  @if($sections->count() > 10)
   <div class="form-row pb-2">
     <div class="col">
       <div class="d-flex flex-row  align-items-center">
@@ -40,6 +41,8 @@
       </div>
     </div>
   </div>
+  @endif
+
   <table class="table table-responsive-lg table-hover">
     <thead>
       <tr>
@@ -72,6 +75,7 @@
     </tbody>
   </table>
   
+  @if($sections->count() > 10)
   <div class="form-row">
     <div class="col">
       <div class="d-flex flex-row  align-items-center">
@@ -90,6 +94,8 @@
       </div>
     </div>
   </div>
+  @endif 
+
 </div>
 <!-- Modal -->
 <div class="modal fade" id="delCon" tabindex="-1" role="dialog" aria-labelledby="delConTitle" aria-hidden="true">
