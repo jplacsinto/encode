@@ -24,7 +24,7 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email|max:255',
+            'email' => "required|email|unique:users,email,{$this->user->id}|max:255",
             'name' => 'required|max:255'
         ];
     }

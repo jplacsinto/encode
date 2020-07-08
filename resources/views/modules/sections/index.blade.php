@@ -62,7 +62,9 @@
 				<td>{{ $section->name }}</td>
 				<td>{{ $section->slug }}</td>
 				<td>{{ $section->parent_section_id }}</td>
-				<td>{{ $section->status }}</td>
+				<td>
+          <span class="badge badge-{{$section->active ? "success":"secondary"}}">{{ $section->active ? "Active":"Deactivated" }}</span>
+        </td>
 				<td>{{ $section->creaetd_by }}</td>
         <td class="text-right">
           <a class="btn btn-primary btn-sm mr-1" href="{{ route('sections.edit', $section->id) }}" role="button">Edit</a>

@@ -15,7 +15,7 @@ class SectionRequest extends FormRequest
     {
         return [
         	'name' => 'required|max:255',
-        	'slug' => 'required|unique:sections,slug|max:255'
+        	'slug' => "required|unique:sections,slug,{$this->section->id}|max:255"
         ];
     }
 }
