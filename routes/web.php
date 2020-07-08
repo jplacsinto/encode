@@ -27,5 +27,7 @@ Route::middleware('auth')->group(function(){
 
 	Route::resource('articles', 'ArticleController')->middleware('can:manage-articles');
 	Route::resource('users', 'UsersController')->middleware('can:manage-users');
+
+	Route::resource('sections', 'SectionController');
 	
 });
