@@ -46,9 +46,7 @@
   <table class="table table-responsive-lg table-hover">
     <thead>
       <tr>
-        <th scope="col">Id</th>
-        @foreach(${{modelNamePluralLowerCase}} as ${{modelNameLowerCase}}){{indexColumnHeaders}}
-        @endforeach
+        <th scope="col">Id</th>{{indexColumnHeaders}}
         <th scope="col"></th>
       </tr>
     </thead>

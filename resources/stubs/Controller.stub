@@ -22,7 +22,7 @@ class {{modelName}}Controller extends Controller
         ${{modelNamePluralLowerCase}} = new {{modelName}};
 
         if(!is_null($search)){
-            ${{modelNamePluralLowerCase}} = ${{modelNamePluralLowerCase}}->where('name', 'LIKE', "%{$search}%")->orWhere('email', 'LIKE', "%{$search}%");
+            ${{modelNamePluralLowerCase}} = ${{modelNamePluralLowerCase}}{{whereClause}}
         }
 
         ${{modelNamePluralLowerCase}} = ${{modelNamePluralLowerCase}}->orderBy($col, $sort)->paginate($rows);
