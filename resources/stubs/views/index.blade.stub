@@ -44,8 +44,7 @@
     <thead>
       <tr>
         <th scope="col">Id</th>
-        @foreach(${{modelNamePluralLowerCase}} as ${{modelNameLowerCase}})
-          {{indexColumnHeaders}}
+        @foreach(${{modelNamePluralLowerCase}} as ${{modelNameLowerCase}}){{indexColumnHeaders}}
         @endforeach
         <th scope="col"></th>
       </tr>
@@ -53,8 +52,7 @@
     <tbody>
       @foreach(${{modelNamePluralLowerCase}} as ${{modelNameLowerCase}})
       <tr>
-        <th scope="row">{{ ${{modelNameLowerCase}}->id }}</th>
-        {{indexColumns}}
+        <td>{{ ${{modelNameLowerCase}}->id }}</td>{{indexColumns}}
         <td class="text-right">
           <a class="btn btn-primary btn-sm mr-1" href="{{ route('{{modelNamePluralLowerCase}}.edit', ${{modelNameLowerCase}}->id) }}" role="button">Edit</a>
           <button onclick="$('#confirmDelete').attr('action', '{{ route('{{modelNamePluralLowerCase}}.destroy', ${{modelNameLowerCase}}->id) }}');" type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delCon">

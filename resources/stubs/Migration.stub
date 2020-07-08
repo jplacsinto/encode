@@ -14,8 +14,7 @@ class Create{{modelName}}Table extends Migration
     public function up()
     {
         Schema::create('{{modelNamePluralLowerCase}}', function (Blueprint $table) {
-            $table->id();
-            {{columns}}
+            $table->id();{{columns}}
             $table->timestamps();
         });
     }

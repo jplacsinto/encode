@@ -151,7 +151,7 @@ class ModuleCrudGenerator extends Command
 
                         $fieldName = $newFieldName;
 
-                        $newColumn = '$table->'.$fieldType."('$fieldName')";
+                        $newColumn = "\n\t\t\t".'$table->'.$fieldType."('$fieldName')";
 
                         $fieldParams = explode(',', $fieldParams);
 
@@ -174,10 +174,10 @@ class ModuleCrudGenerator extends Command
 
                         $newColumn .= "{$defaultValue}";
                         $newColumn .= "{$nullable}";
-                        $newColumn .= ";\n";
+                        $newColumn .= ";";
 
                     }else{
-                        $newColumn = '$table->'.$fieldType."('$fieldName')->nullable();\n";
+                        $newColumn = "\n\t\t\t".'$table->'.$fieldType."('$fieldName')->nullable();";
                     }
 
                     $columns .= $newColumn;
@@ -218,7 +218,14 @@ class ModuleCrudGenerator extends Command
                 $fieldType = substr($column, 0, $pos); 
                 $fieldName = substr($column, $pos+1); 
 
-                $createInputFields .= str_replace(
+                if (($pos = strpos($fieldName, "[")) !== FALSE) {
+                    $newFieldName = substr($fieldName, 0, $pos);
+                    $fieldParams = substr($fieldName, $pos+1, -1);
+
+                    $fieldName = $newFieldName;
+                }
+
+                $createInputFields .= "\n".str_replace(
                     [
                         '{{fieldNameLowerCase}}',
                         '{{fieldNameUpperCase}}'
@@ -230,7 +237,7 @@ class ModuleCrudGenerator extends Command
                     $this->getStub('views/create-input.blade')
                 );
 
-                $editInputFields .= str_replace(
+                $editInputFields .= "\n".str_replace(
                     [
                         '{{fieldNameLowerCase}}',
                         '{{fieldNameUpperCase}}',
@@ -244,7 +251,7 @@ class ModuleCrudGenerator extends Command
                     $this->getStub('views/edit-input.blade')
                 );
 
-                $indexColumnHeaders .= "\n" . str_replace(
+                $indexColumnHeaders .= "\n\t\t\t\t" . str_replace(
                     [
                         '{{modelNameLowerCase}}',
                         '{{fieldName}}'
@@ -256,7 +263,7 @@ class ModuleCrudGenerator extends Command
                     $this->getStub('views/index-column-header.blade')
                 );
 
-                $indexColumns .= "\n" . str_replace(
+                $indexColumns .= "\n\t\t\t\t" . str_replace(
                     [
                         '{{modelNameLowerCase}}',
                         '{{fieldName}}'
