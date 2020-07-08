@@ -44,13 +44,11 @@
     <thead>
       <tr>
         <th scope="col">Id</th>
-        @foreach($sections as $section)
 				<th>{{ ucfirst('name') }}</th>
 				<th>{{ ucfirst('slug') }}</th>
 				<th>{{ ucfirst('parent_section_id') }}</th>
 				<th>{{ ucfirst('status') }}</th>
 				<th>{{ ucfirst('creaetd_by') }}</th>
-        @endforeach
         <th scope="col"></th>
       </tr>
     </thead>

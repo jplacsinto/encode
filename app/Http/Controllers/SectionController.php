@@ -63,4 +63,9 @@ class SectionController extends Controller
 
         return redirect()->back()->with('message', 'Section successfully deleted');
     }
+
+    public function checkSlug()
+    {
+
+    }
 }

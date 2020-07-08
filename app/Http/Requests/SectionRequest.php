@@ -13,6 +13,9 @@ class SectionRequest extends FormRequest
 
     public function rules()
     {
-        return [];
+        return [
+        	'name' => 'required|max:255',
+        	'slug' => 'required|unique:sections,slug|max:255'
+        ];
     }
 }
