@@ -87,16 +87,53 @@ class ModuleCrudGenerator extends Command
 
     protected function controller($name)
     {
+        $columns = $this->option('fields');
+
+        $whereClauseTemplate = '("{{name}}", "LIKE", "%{$search}%")';
+
+        $whereClause = '';
+
+        $columnsArr = explode('|', $columns);
+
+        foreach($columnsArr as $key => $column){
+            if (($pos = strpos($column, ":")) !== FALSE) { 
+                $fieldType = substr($column, 0, $pos); 
+                $fieldName = substr($column, $pos+1);
+
+                if($fieldType == 'string'){
+
+                    if (($pos = strpos($fieldName, "[")) !== FALSE) {
+                        $newFieldName = substr($fieldName, 0, $pos);
+                        $fieldParams = substr($fieldName, $pos+1, -1);
+
+                        $fieldName = $newFieldName;
+                    }
+
+                    if($key > 0)
+                        $whereClause .= '->orWhere';
+                    else
+                        $whereClause .= '->where';
+                    
+                    $whereClause .= str_replace('{{name}}', $fieldName, $whereClauseTemplate);
+
+                }
+            }
+        }
+
+        $whereClause .= ';';
+
         $controllerTemplate = str_replace(
             [
                 '{{modelName}}',
                 '{{modelNamePluralLowerCase}}',
-                '{{modelNameSingularLowerCase}}'
+                '{{modelNameSingularLowerCase}}',
+                '{{whereClause}}'
             ],
             [
                 $name,
                 $this->modelNamePluralLowerCase,
-                strtolower($name)
+                strtolower($name),
+                $whereClause
             ],
             $this->getStub('Controller')
         );
@@ -134,56 +171,55 @@ class ModuleCrudGenerator extends Command
 
         $columns = $this->option('fields');
 
-        if(!empty($columns)){
 
-            $columnsArr = explode('|', $columns);
+        $columnsArr = explode('|', $columns);
 
-            $columns = null;
+        $columns = null;
 
-            foreach($columnsArr as $column){
-                if (($pos = strpos($column, ":")) !== FALSE) { 
-                    $fieldType = substr($column, 0, $pos); 
-                    $fieldName = substr($column, $pos+1);
+        foreach($columnsArr as $column){
+            if (($pos = strpos($column, ":")) !== FALSE) { 
+                $fieldType = substr($column, 0, $pos); 
+                $fieldName = substr($column, $pos+1);
 
-                    if (($pos = strpos($fieldName, "[")) !== FALSE) {
-                        $newFieldName = substr($fieldName, 0, $pos);
-                        $fieldParams = substr($fieldName, $pos+1, -1);
+                if (($pos = strpos($fieldName, "[")) !== FALSE) {
+                    $newFieldName = substr($fieldName, 0, $pos);
+                    $fieldParams = substr($fieldName, $pos+1, -1);
 
-                        $fieldName = $newFieldName;
+                    $fieldName = $newFieldName;
 
-                        $newColumn = "\n\t\t\t".'$table->'.$fieldType."('$fieldName')";
+                    $newColumn = "\n\t\t\t".'$table->'.$fieldType."('$fieldName')";
 
-                        $fieldParams = explode(',', $fieldParams);
+                    $fieldParams = explode(',', $fieldParams);
 
-                        $nullable = !in_array('required', $fieldParams) ? "->nullable()" : "";
-                        $defaultValue = "";
+                    $nullable = !in_array('required', $fieldParams) ? "->nullable()" : "";
+                    $defaultValue = "";
 
-                        foreach ($fieldParams as $param){
+                    foreach ($fieldParams as $param){
 
-                            if (($pos = strpos($param, ":")) !== FALSE) {
-                                $paramName = substr($param, 0, $pos);
-                                $paramValue = substr($param, $pos+1);
+                        if (($pos = strpos($param, ":")) !== FALSE) {
+                            $paramName = substr($param, 0, $pos);
+                            $paramValue = substr($param, $pos+1);
 
-                                if($paramName == 'default'){
-                                    $defaultValue = "->default({$paramValue})";
-                                    $nullable = "";
-                                }
-
+                            if($paramName == 'default'){
+                                $defaultValue = "->default({$paramValue})";
+                                $nullable = "";
                             }
+
                         }
-
-                        $newColumn .= "{$defaultValue}";
-                        $newColumn .= "{$nullable}";
-                        $newColumn .= ";";
-
-                    }else{
-                        $newColumn = "\n\t\t\t".'$table->'.$fieldType."('$fieldName')->nullable();";
                     }
 
-                    $columns .= $newColumn;
+                    $newColumn .= "{$defaultValue}";
+                    $newColumn .= "{$nullable}";
+                    $newColumn .= ";";
+
+                }else{
+                    $newColumn = "\n\t\t\t".'$table->'.$fieldType."('$fieldName')->nullable();";
                 }
+
+                $columns .= $newColumn;
             }
         }
+        
 
         $migrationTemplate = str_replace(
             [

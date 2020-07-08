@@ -65,7 +65,6 @@
     </tbody>
   </table>
   
-
   @if(${{modelNamePluralLowerCase}}->count() > 10)
   <div class="form-row">
     <div class="col">
