@@ -18,9 +18,11 @@ class CreateSectionsTable extends Migration
 			$table->string('name');
 			$table->string('slug');
 			$table->integer('parent_section_id')->nullable();
-			$table->boolean('status')->default(1);
-			$table->integer('creaetd_by')->nullable();
+			$table->boolean('active')->default(1);
+			$table->integer('created_by')->nullable();
             $table->timestamps();
+
+            $table->softDeletes();
         });
     }
 

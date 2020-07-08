@@ -23,8 +23,10 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
+        $userId = isset($this->user->id) ? $this->user->id : "";
+        
         return [
-            'email' => "required|email|unique:users,email,{$this->user->id}|max:255",
+            'email' => "required|email|unique:users,email,{$userId}|max:255",
             'name' => 'required|max:255'
         ];
     }

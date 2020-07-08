@@ -7,7 +7,6 @@ use App\Models\User;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
-use Illuminate\Support\Facades\Hash;
 
 use Gate;
 
@@ -68,12 +67,7 @@ class UsersController extends Controller
     public function store(UserRequest $request)
     {
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make('password'),
-            'active' => $request->has('active')
-        ]);
+        $user = User::create($request->all());
 
         $user->roles()->attach($request->roles);
 
@@ -123,10 +117,7 @@ class UsersController extends Controller
     {
         $user->roles()->sync($request->roles);
 
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->active = $request->has('active');
-        $user->save();
+        $user->update($request->all());
 
         return redirect()->back()->with('success', true);
     }

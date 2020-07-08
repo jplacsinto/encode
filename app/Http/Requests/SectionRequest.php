@@ -13,9 +13,11 @@ class SectionRequest extends FormRequest
 
     public function rules()
     {
+        $sectionId = isset($this->section->id) ? $this->section->id : "";
+
         return [
         	'name' => 'required|max:255',
-        	'slug' => "required|unique:sections,slug,{$this->section->id}|max:255"
+        	'slug' => "required|unique:sections,slug,{$sectionId}|max:255"
         ];
     }
 }

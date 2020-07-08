@@ -37,6 +37,19 @@
                             @enderror
                         </div>
                     </div>
+
+                    <div class="form-group row">
+                        <label for="name" class="col-sm-2 col-form-label">Password</label>
+                        <div class="col-sm-10">
+                            <input id="password" placeholder="Enter password" type="text" class="form-control @error('password') is-invalid @enderror" name="password" value="{{ old('password') }}" autocomplete="password" autofocus>
+                            @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                    </div>
+
                     <div class="form-group row">
                         <label for="roles" class="col-sm-2 col-form-label">Status</label>
                         <div class="col-sm-10">
