@@ -22,7 +22,7 @@
   </div>
   @endif
   
-  @if($users->count() > 10)
+  @if($users->hasPages())
   <div class="form-row">
     <div class="col">
       <div class="d-flex flex-row  align-items-center">
@@ -77,7 +77,7 @@
     </tbody>
   </table>
   
-  @if($users->count() > 10)
+  @if($users->hasPages())
   <div class="form-row">
     <div class="col">
       <div class="d-flex flex-row  align-items-center">
@@ -97,7 +97,7 @@
     </div>
   </div>
   @endif
-  
+
 </div>
 <!-- Modal -->
 <div class="modal fade" id="delCon" tabindex="-1" role="dialog" aria-labelledby="delConTitle" aria-hidden="true">

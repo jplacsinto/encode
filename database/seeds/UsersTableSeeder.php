@@ -1,9 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-
-use Illuminate\Support\Facades\Hash;
-
 use App\Models\User;
 use App\Models\Role;
 
@@ -21,39 +18,30 @@ class UsersTableSeeder extends Seeder
         DB::table('role_user')->truncate();
 
         $adminRole = Role::where('name', 'admin')->first();
-        $authorRole = Role::where('name', 'author')->first();
-        $userRole = Role::where('name', 'user')->first();
+        $editorRole = Role::where('name', 'editor')->first();
 
         $admin = User::create([
         	'name' => 'Admin User',
         	'email' => 'admin@admin.com',
-        	'password' => Hash::make('adminadmin'),
+        	'password' => 'password',
             'active' => true
         ]);
 
-        $author = User::create([
-        	'name' => 'Author User',
-        	'email' => 'author@author.com',
-        	'password' => Hash::make('password'),
-            'active' => true
-        ]);
-
-        $user = User::create([
-        	'name' => 'Generic User',
-        	'email' => 'user@user.com',
-        	'password' => Hash::make('password'),
+        $editor = User::create([
+        	'name' => 'Editor User',
+        	'email' => 'editor@editor.com',
+        	'password' => 'password',
             'active' => true
         ]);
 
         $admin->roles()->attach($adminRole);
-        $author->roles()->attach($authorRole);
-        $user->roles()->attach($userRole);
+        $editor->roles()->attach($editorRole);
 
 
-        $users = factory(User::class, 57)
+        $users = factory(User::class, 2)
            ->create()
-           ->each(function ($user) use ($userRole) {
-                $user->roles()->attach($userRole);
+           ->each(function ($user) use ($editorRole) {
+                $user->roles()->attach($editorRole);
             });
     }
 }

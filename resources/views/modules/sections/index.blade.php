@@ -22,7 +22,7 @@
   </div>
   @endif
   
-  @if($sections->count() > 10)
+  @if($sections->hasPages())
   <div class="form-row pb-2">
     <div class="col">
       <div class="d-flex flex-row  align-items-center">
@@ -77,7 +77,7 @@
     </tbody>
   </table>
   
-  @if($sections->count() > 10)
+  @if($sections->hasPages())
   <div class="form-row">
     <div class="col">
       <div class="d-flex flex-row  align-items-center">

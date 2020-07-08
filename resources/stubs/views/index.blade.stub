@@ -22,7 +22,7 @@
   </div>
   @endif
   
-  @if(${{modelNamePluralLowerCase}}->count() > 10)
+  @if(${{modelNamePluralLowerCase}}->hasPages())
   <div class="form-row pb-2">
     <div class="col">
       <div class="d-flex flex-row  align-items-center">
@@ -65,7 +65,7 @@
     </tbody>
   </table>
   
-  @if(${{modelNamePluralLowerCase}}->count() > 10)
+  @if(${{modelNamePluralLowerCase}}->hasPages())
   <div class="form-row">
     <div class="col">
       <div class="d-flex flex-row  align-items-center">
