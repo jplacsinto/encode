@@ -1,126 +1,94 @@
 @extends('layouts.base')
 @section('content')
-<div class="form-row">
-  <div class="col">
-    <h1 class="h2">Users
-    <a href="{{route('users.create')}}" type="button" class="btn btn-outline-primary ml-3">Create New</a>
-    </h1>
-  </div>
-  <div class="col">
-    <form class="input-group mb-3" method="GET" action="{{route('users.index')}}">
-      {{ Form::text('search', request('search'), ['class' => 'form-control', 'placeholder'=>"Search name or email"]) }}
-      <div class="input-group-append">
-        <button class="btn btn-outline-secondary" type="submit"><span data-feather="search"></span> Search</button>
-      </div>
-    </form>
-  </div>
-</div>
-<div class="card p-3">
-  @if (session()->has('message'))
-  <div class="alert alert-success">
-    {{ session()->get('message') }}
-  </div>
-  @endif
-  
-  @if($users->hasPages())
-  <div class="form-row">
-    <div class="col">
-      <div class="d-flex flex-row  align-items-center">
-        <span class="small mr-1">Show</span>
-        <select class="show-rows form-control" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
-          <option {{ request('rows') == 10 ? 'selected':'' }}  value="{{ add_query_params(['rows'=>10]) }}">10</option>
-          <option {{ request('rows') == 30 ? 'selected':'' }} value="{{ add_query_params(['rows'=>30]) }}">30</option>
-          <option {{ request('rows') == 50 ? 'selected':'' }} value="{{ add_query_params(['rows'=>50]) }}">50</option>
-        </select>
-        <span class="small ml-1">rows</span>
-      </div>
-    </div>
-    <div class="col-10">
-      <div class="float-right">
-        {{ $users->withQueryString()->links() }}
-      </div>
-    </div>
-  </div>
-  @endif
+  <div class="w-full mb-3">
 
-  <table class="table table-responsive-lg table-hover">
-    <thead>
-      <tr>
-        <th scope="col">Id</th>
-        <th scope="col">Name</th>
-        <th scope="col">Email</th>
-        <th scope="col">Status</th>
-        <th scope="col">Roles</th>
-        <th scope="col"></th>
-      </tr>
-    </thead>
-    <tbody>
-      @foreach($users as $user)
-      <tr>
-        <td>{{ $user->id }}</td>
-        <td>{{ $user->name }}</td>
-        <td>{{ $user->email }}</td>
-        <td><span class="badge badge-{{$user->active ? "success":"secondary"}}">{{ $user->active ? "Active":"Deactivated" }}</span></td>
-        <td>
-          @foreach($user->roles as $role)
-          <span class="badge badge-info">{{ $role->name }}</span>
-          @endforeach
-        </td>
-        <td class="text-right">
-          <a class="btn btn-primary btn-sm mr-1" href="{{ route('users.edit', $user->id) }}" role="button">Edit</a>
-          <button onclick="$('#confirmDelete').attr('action', '{{ route('users.destroy', $user->id) }}');" type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delCon">
-          Delete
-          </button>
-        </td>
-      </tr>
-      @endforeach
-    </tbody>
-  </table>
-  
-  @if($users->hasPages())
-  <div class="form-row">
-    <div class="col">
-      <div class="d-flex flex-row  align-items-center">
-        <span class="small mr-1">Show</span>
-        <select class="show-rows form-control" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
-          <option {{ request('rows') == 10 ? 'selected':'' }}  value="{{ add_query_params(['rows'=>10]) }}">10</option>
-          <option {{ request('rows') == 30 ? 'selected':'' }} value="{{ add_query_params(['rows'=>30]) }}">30</option>
-          <option {{ request('rows') == 50 ? 'selected':'' }} value="{{ add_query_params(['rows'=>50]) }}">50</option>
-        </select>
-        <span class="small ml-1">rows</span>
-      </div>
-    </div>
-    <div class="col-10">
-      <div class="float-right">
-        {{ $users->withQueryString()->links() }}
-      </div>
-    </div>
-  </div>
-  @endif
+      @if (session()->has('message'))
+        @include('components.alerts.default', ['message' => session()->get('message')])
+      @endif  
 
-</div>
-<!-- Modal -->
-<div class="modal fade" id="delCon" tabindex="-1" role="dialog" aria-labelledby="delConTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Delete User</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Are you sure you want to delete
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Cancel</button>
-        <form id="confirmDelete" action="" method="POST">
-          @csrf
-          {{ method_field('DELETE') }}
-          <button type="submit" class="btn btn-danger btn-sm">Confirm Delete</button>
-        </form>
-      </div>
-    </div>
+     <div class="mb-4 flex justify-between items-center">
+        <div class="flex-1 pr-4">
+           <span class="text-xl items-center">
+           <i class="fas fa-list mr-3"></i> Users
+           </span>
+           <a href="{{route('users.create')}}" type="button" class="ml-4 bg-transparent hover:bg-blue-700 text-blue-500 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"><i class="fas fa-plus mr-2"></i>New</a>
+        </div>
+        <div class="flex-1">
+           <form class="relative" method="GET" action="{{route('users.index')}}">
+              <input type="search" name="search"
+                 class="w-full pl-10 pr-4 py-2 rounded-lg shadow focus:outline-none focus:shadow-outline text-gray-600 font-medium" placeholder="Search..." value="{{request('search')}}">
+              <div class="absolute top-0 left-0 inline-flex items-center p-2">
+                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-400" viewBox="0 0 24 24"
+                    stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <rect x="0" y="0" width="24" height="24" stroke="none"></rect>
+                    <circle cx="10" cy="10" r="7" />
+                    <line x1="21" y1="21" x2="15" y2="15" />
+                 </svg>
+              </div>
+           </form>
+        </div>
+     </div>
+     <div class="bg-white rounded shadow-xs pb-5 overflow-x-auto">
+        <table class="w-full text-md mb-5">
+           <tbody>
+              <tr class="border-b">
+                 <th class="text-left p-3 px-5">Id</th>
+                 <th class="text-left p-3 px-5">Name</th>
+                 <th class="text-left p-3 px-5">Email</th>
+                 <th class="text-left p-3 px-5">Status</th>
+                 <th class="text-left p-3 px-5">Roles</th>
+                 <th class="text-right"></th>
+              </tr>
+              @foreach($users as $key => $user)
+              <tr class="border-b hover:bg-orange-100 {{ $key % 2 == 0 ? 'bg-gray-100':''}}">
+                 <td class="p-3 px-5">{{ $user->id }}</td>
+                 <td class="p-3 px-5">{{ $user->name }}</td>
+                 <td class="p-3 px-5">{{ $user->email }}</td>
+                 <td class="p-3 px-5"><span class="bg-{{$user->active ? "green":"gray"}}-500 text-xs text-white px-2 rounded">{{ $user->active ? "Active":"Deactivated" }}</span></td>
+                 <td class="p-3 px-5">
+                    @foreach($user->roles as $role)
+                    <span class="bg-{{ $role->name == 'admin' ? 'blue':'gray'}}-500 text-xs text-white px-2 rounded">{{ ucfirst($role->name) }}</span>
+                    @endforeach
+                 </td>
+
+                 <td class="p-3 px-5 text-right">
+                    {{-- <a class="mr-3 text-sm bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline" href="{{ route('users.edit', $user->id) }}" role="button">Edit</a>
+                    <button data-name="{{ $user->name }}" data-action="{{ route('users.destroy', $user->id) }}" type="button" class="modal-open text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline">
+                    Delete
+                    </button> --}}
+
+                    {{-- <div x-data="{ isOpen: false }" class="relative flex justify-end">
+                      <button @click="isOpen = !isOpen" class="realtive py-1 bg-transparent px-3 overflow-hidden focus:text-gray-900 focus:outline-none">
+                          <i class="fa fa-ellipsis-v text-gray-500" aria-hidden="true"></i>
+                      </button>
+
+
+                      <button x-show="isOpen" @click="isOpen = false" class="h-full w-full fixed inset-1 cursor-default"></button>
+                      <div x-show="isOpen" class="absolute w-32 bg-white rounded-lg shadow-lg py-2 text-sm z-10">
+                          <a href="{{ route('users.edit', $user->id) }}" title="edit" class="block px-4 py-1 account-link hover:text-white">Edit</a>
+                          <a href="#" data-name="{{ $user->name }}" data-action="{{ route('users.destroy', $user->id) }}" title="delete" class="block px-4 py-1 account-link hover:text-white modal-open">Delete</a>
+                      </div>
+                    </div> --}}
+
+                    <a href="{{ route('users.edit', $user->id) }}" title="edit" class="text-gray-800 opacity-75 hover:opacity-100 mr-3">
+                      <i class="fa fa-edit"></i>
+                    </a>
+                    <a href="#" title="Delete" data-name="{{ $user->name }}" data-action="{{ route('users.destroy', $user->id) }}" class="text-gray-800 opacity-75 hover:opacity-100 modal-open">
+                      <i class="fa fa-ban"></i>
+                    </a>
+                 </td>
+              </tr>
+              @endforeach
+           </tbody>
+        </table>
+        <div class="px-5">
+            {{ $users->withQueryString()->links() }}
+        </div>
+     </div>
   </div>
-</div>
+@endsection
+
+@section('body_close')
+  @include('components.modals.delete')
 @endsection

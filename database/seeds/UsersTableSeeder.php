@@ -38,7 +38,7 @@ class UsersTableSeeder extends Seeder
         $editor->roles()->attach($editorRole);
 
 
-        $users = factory(User::class, 2)
+        $users = factory(User::class, 30)
            ->create()
            ->each(function ($user) use ($editorRole) {
                 $user->roles()->attach($editorRole);

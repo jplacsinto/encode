@@ -1,69 +1,43 @@
-<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-  <div class="sidebar-sticky pt-3">
-    <ul class="nav flex-column">
-      <li class="nav-item">
-        <a class="nav-link active" href="{{ route('articles.index') }}">
-          <span data-feather="list"></span>
-          Articles
-        </a>
-      </li>
-      
-      <li class="nav-item">
-        <a class="nav-link ml-3" href="#">
-          <span data-feather="grid"></span>
-          Galleries
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link ml-3" href="#">
-          <span data-feather="video"></span>
-          Videos
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link ml-3" href="#">
-          <span data-feather="user-check"></span>
-          Surveys
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link ml-3" href="#">
-          <span data-feather="calendar"></span>
-          Events
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">
-          <span data-feather="plus-square"></span>
-          Sections
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">
-          <span data-feather="users"></span>
-          Authors
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">
-          <span data-feather="image"></span>
-          Image Library
-        </a>
-      </li>
-      
-      
-      <li class="nav-item">
-        <a class="nav-link" href="#">
-          <span data-feather="tag"></span>
-          Tags
-        </a>
-      </li>
-    </ul>
-    {{-- <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-    <span>Divider Label</span>
-    <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
-      <span data-feather="plus-circle"></span>
-    </a>
-    </h6> --}}
+<aside class="relative bg-gray-900 h-screen w-64 hidden sm:block shadow-xl">
+  <div class="px-6 py-3 bg-gray-800">
+      <a href="index.html" class="text-white text-1xl font-semibold uppercase hover:text-gray-300">
+        <i class="em em-cyclone" aria-role="presentation" aria-label="CYCLONE"></i>
+        {{ config('app.name', 'Laravel') }}</a>
+
+
+      <button class="w-full bg-white cta-btn font-semibold py-2 mt-4 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
+          <i class="fas fa-plus mr-3"></i> New Article
+      </button>
   </div>
-</nav>
+  <nav class="text-white text-base">
+      <a href="index.html" class="flex items-center active-nav-link text-white py-2 px-6 nav-item">
+          <i class="fa fa-newspaper mr-3"></i>
+          
+          Articles
+      </a>
+      <a href="blank.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 px-6 nav-item">
+          <i class="fas fa-user-circle mr-3"></i>
+          Authors
+      </a>
+      <a href="tables.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 px-6 nav-item">
+          <i class="fas fa-tag mr-3"></i>
+          Tags
+      </a>
+      <a href="forms.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 px-6 nav-item">
+          <i class="fas fa-file-image mr-3"></i>
+          Galleries
+      </a>
+      <a href="tabs.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 px-6 nav-item">
+          <i class="fas fa-th-list mr-3"></i>
+          Sections
+      </a>
+  </nav>
+  {{-- <a href="#" class="absolute w-full upgrade-btn bottom-0 active-nav-link text-white flex items-center justify-center py-4">
+      <i class="fas fa-arrow-circle-up mr-3"></i>
+      Upgrade to Pro!
+  </a> --}}
+
+  <div class="absolute text-xs w-full bg-gray-900 bottom-0 text-gray-700 text-center py-4">&copy; Copyright {{ config('app.name', 'Laravel') }} 2020</div>
+
+</div>
+</aside>

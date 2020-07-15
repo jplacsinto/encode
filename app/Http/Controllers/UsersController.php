@@ -115,6 +115,8 @@ class UsersController extends Controller
      */
     public function update(UserRequest $request, User $user)
     {
+        if(!$request->has('active')) $request->merge(['active' => 0]);
+
         $user->roles()->sync($request->roles);
 
         $user->update($request->all());
