@@ -1,21 +1,21 @@
 <aside class="relative bg-gray-900 h-screen w-64 hidden sm:block shadow-xl">
   <div class="px-6 py-3 bg-gray-800">
-      <a href="index.html" class="text-white text-1xl font-semibold uppercase hover:text-gray-300">
+      <a href="/" class="text-white text-1xl font-semibold uppercase hover:text-gray-300">
         <i class="em em-cyclone" aria-role="presentation" aria-label="CYCLONE"></i>
         {{ config('app.name', 'Laravel') }}</a>
 
 
-      <button class="w-full bg-white cta-btn font-semibold py-2 mt-4 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
+      <a href="{{route('articles.create')}}" class="w-full bg-white cta-btn font-semibold py-2 mt-4 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
           <i class="fas fa-plus mr-3"></i> New Article
-      </button>
+      </a>
   </div>
   <nav class="text-white text-base">
-      <a href="index.html" class="flex items-center active-nav-link text-white py-2 px-6 nav-item">
+      <a href="{{route('articles.index')}}" class="flex items-center active-nav-link text-white py-2 px-6 nav-item">
           <i class="fa fa-newspaper mr-3"></i>
           
           Articles
       </a>
-      <a href="blank.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 px-6 nav-item">
+      <a href="{{route('authors.index')}}" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 px-6 nav-item">
           <i class="fas fa-user-circle mr-3"></i>
           Authors
       </a>

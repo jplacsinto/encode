@@ -154,10 +154,47 @@ class ModuleCrudGenerator extends Command
 
     protected function request($name)
     {
+        $columns = $this->option('fields');
+
+        $columnsArr = explode('|', $columns);
+
+        $rules = "";
+
+        foreach($columnsArr as $column){
+            if (($pos = strpos($column, ":")) !== FALSE) { 
+                $fieldType = substr($column, 0, $pos); 
+                $fieldName = substr($column, $pos+1);
+
+                $ruleValues = $fieldType == 'string'?'max:255':'';
+
+                if (($pos = strpos($fieldName, "[")) !== FALSE) {
+                    $newFieldName = substr($fieldName, 0, $pos);
+                    $fieldParams = substr($fieldName, $pos+1, -1);
+
+                    $fieldName = $newFieldName;
+
+                    $fieldParams = explode(',', $fieldParams);
+
+                    if(in_array('required', $fieldParams)){
+                        $ruleValues .= "|required";
+                        
+                    }
+                }
+
+
+
+                if(!empty($ruleValues)){
+                    $rules .= "'{$fieldName}' => '{$ruleValues}',\n\t\t\t";
+                }
+                
+            }
+        }
+
         $requestTemplate = str_replace(
-            ['{{modelName}}'],
-            [$name],
+            ['{{modelName}}', '{{rules}}'],
+            [$name, $rules],
             $this->getStub('Request')
+
         );
 
         if(!file_exists($path = app_path('/Http/Requests')))

@@ -9,7 +9,7 @@
     <p class="text-xl pb-3 flex items-center">
         <i class="fas fa-list mr-3"></i> Edit {{modelName}}
     </p>
-    <form class="p-5 bg-white rounded shadow-xl" action="{{route('{{modelNamePluralLowerCase}}.update', $section)}}" method="POST">
+    <form class="p-5 bg-white rounded shadow-xl" action="{{route('{{modelNamePluralLowerCase}}.update', ${{modelNameLowerCase}})}}" method="POST">
         @csrf
         {{ method_field('PUT') }}
         
