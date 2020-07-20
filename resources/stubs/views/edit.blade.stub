@@ -1,37 +1,34 @@
 @extends('layouts.base')
 @section('content')
-<h1 class="h2">Edit {{modelName}}</h1>
-<div class="card">
 
-    <div class="card-body">
-        <a href="{{ route('{{modelNamePluralLowerCase}}.index') }}" type="submit" class="btn btn-light mb-3">
-            <span data-feather="chevron-left"></span>
-            Back
-        </a>
-        @if (session()->has('success'))
-        <div class="alert alert-success">
-            {{modelName}} successfully updated!
+@if (session()->has('success'))
+    @include('components.alerts.default', ['message' => '{{modelName}} successfully updated!'])
+@endif
+
+<div class="w-full lg:w-1/2 my-3 pr-0 lg:pr-2">
+    <p class="text-xl pb-3 flex items-center">
+        <i class="fas fa-list mr-3"></i> Edit {{modelName}}
+    </p>
+    <form class="p-5 bg-white rounded shadow-xl" action="{{route('{{modelNamePluralLowerCase}}.update', $section)}}" method="POST">
+        @csrf
+        {{ method_field('PUT') }}
+        
+        {{editInputFields}}
+
+        <div class="mt-6">
+
+            <a href="{{ route('{{modelNamePluralLowerCase}}.index') }}" type="button" class="px-4 py-2 text-white bg-gray-500 hover:bg-gray-600 hover:text-white rounded">
+                Go Back
+            </a>
+
+
+            <button type="submit" class="px-4 py-2 text-white bg-blue-900 hover:bg-blue-800 rounded" type="submit">Update {{modelName}}</button>
         </div>
-        @endif
-        <h5 class="card-title border-bottom pb-3">{{modelName}}: {{${{modelNameLowerCase}}->name}}</h5>
-        <div class="row">
-            <div class="col-sm">
-                <form action="{{route('{{modelNamePluralLowerCase}}.update', ${{modelNameLowerCase}})}}" method="POST">
-                    @csrf
-                    {{ method_field('PUT') }}
-
-                    {{editInputFields}}
-
-                    <div class="form-group row">
-                        <div class="col-sm-2"></div>
-                        <div class="col-sm-10">
-                            <button type="submit" class="btn btn-primary">Update {{modelName}}</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="col-sm"></div>
-        </div>
-    </div>
+    </form>
 </div>
+
+@endsection
+
+@section('scripts')
+<script src="{{ asset('js/make_slug.js') }}"></script>
 @endsection
