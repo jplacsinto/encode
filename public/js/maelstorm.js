@@ -1,3 +1,5 @@
+
+//Modal
 const overlay = document.querySelector('.modal-overlay')
 overlay.addEventListener('click', toggleModal)
 
@@ -27,3 +29,4 @@ function toggleModal () {
   modal.classList.toggle('pointer-events-none')
   body.classList.toggle('modal-active')
 }
+// modal script ends here

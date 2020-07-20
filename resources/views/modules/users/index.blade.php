@@ -30,46 +30,50 @@
         </div>
      </div>
      <div class="bg-white rounded shadow-xs pb-5 overflow-x-auto">
-        <table class="w-full text-md mb-5">
+        <table class="w-full mb-5">
            <tbody>
               <tr class="border-b">
-                 <th class="text-left p-3 px-5">Id</th>
-                 <th class="text-left p-3 px-5">Name</th>
-                 <th class="text-left p-3 px-5">Email</th>
-                 <th class="text-left p-3 px-5">Status</th>
-                 <th class="text-left p-3 px-5">Roles</th>
-                 <th class="text-right"></th>
+                 <th width="50"></th>
+                 <th class="text-left p-3 text-gray-700">{!!make_sortable('id', 'Id')!!}</th>
+                 <th class="text-left p-3 text-gray-700">{!!make_sortable('name', 'Name')!!}</th>
+                 <th class="text-left p-3 text-gray-700">{!!make_sortable('email', 'Email')!!}</th>
+                 <th class="text-left p-3 text-gray-700">Status</th>
+                 <th class="text-left p-3 text-gray-700">Roles</th>
               </tr>
               @foreach($users as $key => $user)
               <tr class="border-b hover:bg-orange-100 {{ $key % 2 == 0 ? 'bg-gray-100':''}}">
-                 <td class="p-3 px-5">{{ $user->id }}</td>
-                 <td class="p-3 px-5">{{ $user->name }}</td>
-                 <td class="p-3 px-5">{{ $user->email }}</td>
-                 <td class="p-3 px-5"><span class="bg-{{$user->active ? "green":"gray"}}-500 text-xs text-white px-2 rounded">{{ $user->active ? "Active":"Deactivated" }}</span></td>
-                 <td class="p-3 px-5">
-                    @foreach($user->roles as $role)
-                    <span class="bg-{{ $role->name == 'admin' ? 'blue':'gray'}}-500 text-xs text-white px-2 rounded">{{ ucfirst($role->name) }}</span>
-                    @endforeach
-                 </td>
-
-                 <td class="p-3 px-5 text-right">
-                    {{-- <a class="mr-3 text-sm bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline" href="{{ route('users.edit', $user->id) }}" role="button">Edit</a>
-                    <button data-name="{{ $user->name }}" data-action="{{ route('users.destroy', $user->id) }}" type="button" class="modal-open text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline">
-                    Delete
-                    </button> --}}
-
-                    {{-- <div x-data="{ isOpen: false }" class="relative flex justify-end">
-                      <button @click="isOpen = !isOpen" class="realtive py-1 bg-transparent px-3 overflow-hidden focus:text-gray-900 focus:outline-none">
-                          <i class="fa fa-ellipsis-v text-gray-500" aria-hidden="true"></i>
+                 <td class="pl-3">
+                   
+                  <div x-data="{ isOpen: false }" class="relative w-1/2 flex justify-start">
+                      <button @click="isOpen = !isOpen" class="realtive py-1 bg-transparent px-3 overflow-hidden focus:outline-none">
+                          <i class="fa fa-ellipsis-v text-gray-500 hover:text-gray-800" aria-hidden="true"></i>
                       </button>
 
 
-                      <button x-show="isOpen" @click="isOpen = false" class="h-full w-full fixed inset-1 cursor-default"></button>
-                      <div x-show="isOpen" class="absolute w-32 bg-white rounded-lg shadow-lg py-2 text-sm z-10">
-                          <a href="{{ route('users.edit', $user->id) }}" title="edit" class="block px-4 py-1 account-link hover:text-white">Edit</a>
-                          <a href="#" data-name="{{ $user->name }}" data-action="{{ route('users.destroy', $user->id) }}" title="delete" class="block px-4 py-1 account-link hover:text-white modal-open">Delete</a>
+                      <button x-show="isOpen" @click="isOpen = false" class="h-full w-full fixed inset-0 left-40 cursor-default"></button>
+                      <div x-show="isOpen" class="absolute w-32 bg-white rounded-lg shadow-lg py-2 ml-10 text-sm">
+                          <a href="{{ route('users.edit', $user->id) }}" title="edit" class="block px-4 py-1 hover:bg-gray-300 text-gray-700">
+                            <i class="fa fa-edit mr-1"></i> Edit
+                          </a>
+                          <a href="#" title="Delete" data-name="{{ $user->name }}" data-action="{{ route('users.destroy', $user->id) }}" class="block px-4 py-1 modal-open hover:bg-gray-300 text-gray-700">
+                            <i class="fa fa-ban mr-1"></i> Delete
+                          </a>
                       </div>
-                    </div> --}}
+                  </div>
+
+                 </td>
+                 <td class="p-3">{{ $user->id }}</td>
+                 <td class="p-3">{{ $user->name }}</td>
+                 <td class="p-3">{{ $user->email }}</td>
+                 <td class="p-3"><span class="bg-{{$user->active ? "green":"gray"}}-500 text-xs text-white py-1 px-2 rounded-full">{{ $user->active ? "Active":"Deactivated" }}</span></td>
+                 <td class="p-3">
+                    @foreach($user->roles as $role)
+                    <span class="bg-{{ $role->name == 'admin' ? 'blue':'gray'}}-500 text-xs text-white py-1 px-2 rounded-full">{{ ucfirst($role->name) }}</span>
+                    @endforeach
+                 </td>
+
+                 {{-- <td class="p-3 text-right">
+                    
 
                     <a href="{{ route('users.edit', $user->id) }}" title="edit" class="text-gray-800 opacity-75 hover:opacity-100 mr-3">
                       <i class="fa fa-edit"></i>
@@ -77,7 +81,7 @@
                     <a href="#" title="Delete" data-name="{{ $user->name }}" data-action="{{ route('users.destroy', $user->id) }}" class="text-gray-800 opacity-75 hover:opacity-100 modal-open">
                       <i class="fa fa-ban"></i>
                     </a>
-                 </td>
+                 </td> --}}
               </tr>
               @endforeach
            </tbody>

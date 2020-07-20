@@ -52,3 +52,32 @@ function add_query_params(array $params = [])
 
     return url()->current() . '?' . http_build_query($query); // rebuild the URL with the new parameters array
 }
+
+
+function make_sortable($colName, $colTitle)
+{
+    $currSort = request()->get('sort', 'desc');
+    $currCol = request()->get('col', 'id');
+
+    $action = url(add_query_params(['sort'=> 'desc', 'col'=>$colName]));
+        
+    $icon = '';
+    if($currSort == 'asc' && $currCol == $colName){
+        $action = url(add_query_params(['sort'=> 'desc', 'col'=>$colName]));
+        $icon = "-down";
+    }elseif($currSort == 'desc' && $currCol == $colName){
+        $action = url(add_query_params(['sort'=> 'asc', 'col'=>$colName]));
+        $icon = "-up";
+    }
+    
+
+    
+    //dd($icon);
+
+
+    return view('components.table-sort', [
+        'action' => $action,
+        'icon' => $icon,
+        'title' => $colTitle,
+    ])->render();
+}
