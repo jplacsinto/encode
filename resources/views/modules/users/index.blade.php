@@ -86,9 +86,18 @@
               @endforeach
            </tbody>
         </table>
-        <div class="px-5">
+
+        <div class="px-5 flex justify-between items-center">
+            <select class="px-5 mr-10 appearance-none p-2 rounded-lg shadow focus:outline-none focus:shadow-outline text-gray-600 font-medium" title="Rows" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+              <option {{ request('rows') == 10 ? 'selected':'' }}  value="{{ add_query_params(['rows'=>10]) }}">10</option>
+              <option {{ request('rows') == 30 ? 'selected':'' }} value="{{ add_query_params(['rows'=>30]) }}">30</option>
+              <option {{ request('rows') == 50 ? 'selected':'' }} value="{{ add_query_params(['rows'=>50]) }}">50</option>
+            </select>
+            <div class="flex-1">
             {{ $users->withQueryString()->links() }}
+          </div>
         </div>
+
      </div>
   </div>
 @endsection

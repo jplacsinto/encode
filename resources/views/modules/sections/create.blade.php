@@ -1,74 +1,66 @@
 @extends('layouts.base')
 @section('content')
-<h1 class="h2">Create Section</h1>
-<div class="card">
-    <div class="card-body">
-        <a href="{{ route('sections.index') }}" type="submit" class="btn btn-light mb-3">
-            <span data-feather="chevron-left"></span>
-        Back</a>
-        @if (session()->has('success'))
-        <div class="alert alert-success">
-            Section successfully updated!
+
+@if (session()->has('success'))
+    @include('components.alerts.default', ['message' => 'Section successfully created!'])
+@endif
+
+<div class="w-full lg:w-1/2 my-3 pr-0 lg:pr-2">
+    <p class="text-xl pb-3 flex items-center">
+        <i class="fas fa-list mr-3"></i> Create Section
+    </p>
+    <form class="p-5 bg-white rounded shadow-xl" action="{{route('sections.store')}}" method="POST">
+        @csrf
+        {{ method_field('POST') }}
+
+
+        
+
+        <div class="mb-4">
+            <label class="block text-sm text-gray-600 mb-2" for="name">Name</label>
+            <input onblur="makeSlug(this.value, 'slug')" placeholder="Enter name" id="section-name" type="text" class="form-input w-full px-5 py-2 text-gray-700 bg-gray-200 rounded @error('name') border-red-500 @enderror" name="name" value="{{ old('name') }}" autocomplete="name">
+            @error('name')
+                <p class="text-red-500 text-xs">
+                    <strong>{{ $message }}</strong>
+                </p>
+            @enderror
         </div>
-        @endif
-        <div class="row">
-            <div class="col-sm">
-                <form action="{{route('sections.store')}}" method="POST">
-                    @csrf
 
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Name</label>
-                        <div class="col-sm-10">
-                            <input id="section-name" placeholder="Enter name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" onblur="makeSlug(this.value, 'slug')">
-                            @error('name')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Slug</label>
-                        <div class="col-sm-10">
-                            <input id="slug" readonly placeholder="Enter slug" type="text" class="form-control @error('slug') is-invalid @enderror" name="slug" value="{{ old('slug') }}">
-                            @error('slug')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Parent Section</label>
-                        <div class="col-sm-10">
-                            <input placeholder="Enter parent_section_id" type="text" class="form-control @error('parent_section_id') is-invalid @enderror" name="parent_section_id" value="{{ old('parent_section_id') }}">
-                            @error('parent_section_id')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="roles" class="col-sm-2 col-form-label">Status</label>
-                        <div class="col-sm-10">
-                            <div class="custom-control custom-switch my-2">
-                            <input name="active" value="1" @if(old('active')) checked @endif type="checkbox" class="custom-control-input" id="active" />
-                                <label class="custom-control-label" for="active">Active</label>
-                            </div>
-                        </div>
-                    </div>
+        <div class="mb-4">
+            <label class="block text-sm text-gray-600 mb-2" for="slug">Slug</label>
+            <input placeholder="Enter slug" id="slug" type="text" class="form-input w-full px-5 py-2 text-gray-700 bg-gray-200 rounded @error('slug') border-red-500 @enderror" name="slug" value="{{ old('slug') }}" autocomplete="slug" readonly>
+            @error('slug')
+                <p class="text-red-500 text-xs">
+                    <strong>{{ $message }}</strong>
+                </p>
+            @enderror
+        </div>
 
-                    <div class="form-group row">
-                        <div class="col-sm-2"></div>
-                        <div class="col-sm-10">
-                            <button type="submit" class="btn btn-primary">Create Section</button>
-                        </div>
-                    </div>
-                </form>
+        <!-- component -->
+        <div class="flex flex-wrap items-center my-5">
+           <label class="block text-sm text-gray-600 mr-4 mb-2" for="name">Status</label>
+           <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+                <input value="1" type="checkbox" name="active" id="toggle" class="focus:outline-none toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" @if(old('active') == true) checked @endif/>
+                <label for="toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
             </div>
-            <div class="col-sm"></div>
+            <label for="toggle" class="text-xs text-gray-700">Active</label>
         </div>
-    </div>
+
+
+        <div class="mt-6">
+
+            <a href="{{ route('sections.index') }}" type="button" class="px-4 py-2 text-white bg-gray-500 hover:bg-gray-600 hover:text-white rounded">
+                Go Back
+            </a>
+
+
+            <button type="submit" class="px-4 py-2 text-white bg-blue-900 hover:bg-blue-800 rounded" type="submit">Submit</button>
+        </div>
+    </form>
 </div>
+
+@endsection
+
+@section('scripts')
+<script src="{{ asset('js/make_slug.js') }}"></script>
 @endsection

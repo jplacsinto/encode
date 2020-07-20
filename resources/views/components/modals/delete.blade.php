@@ -63,9 +63,7 @@
       })
     }
 
-
-    
   </script>
-  @endsection
 
-  
+  <script src="{{ asset('js/modal.js') }}"></script>
+  @endsection

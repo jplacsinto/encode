@@ -56,8 +56,6 @@
 
     <script src="{{ asset('js/fontawesome.min.js') }}"></script>
 
-    <script src="{{ asset('js/maelstorm.js') }}"></script>
-
     @yield('scripts')
 
 </body>
