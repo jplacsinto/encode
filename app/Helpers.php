@@ -54,6 +54,8 @@ function add_query_params(array $params = [])
 }
 
 
+
+//creates sorting functionality for table header
 function make_sortable($colName, $colTitle)
 {
     $currSort = request()->get('sort', 'desc');
@@ -70,11 +72,6 @@ function make_sortable($colName, $colTitle)
         $icon = "-up";
     }
     
-
-    
-    //dd($icon);
-
-
     return view('components.table-sort', [
         'action' => $action,
         'icon' => $icon,

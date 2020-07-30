@@ -33,8 +33,8 @@
         <table class="w-full mb-5">
            <tbody>
               <tr class="border-b">        
-                 <th width="50"></th><th class="text-left p-3 text-gray-700">Id</th>
-        				<th class="text-left p-3 text-gray-700">{{ ucfirst('name') }}</th>
+                 <th width="50"></th><th class="text-left p-3 text-gray-700">{!! make_sortable('id', ucwords('id')) !!}</th>
+        				<th class="text-left p-3 text-gray-700">{!! make_sortable('name', ucwords('name')) !!}</th>
                 <th class="text-left p-3 text-gray-700">Access</th>
               </tr>
               @foreach($roles as $key => $role)

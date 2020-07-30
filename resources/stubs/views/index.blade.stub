@@ -33,7 +33,7 @@
         <table class="w-full mb-5">
            <tbody>
               <tr class="border-b">        
-                 <th width="50"></th><th class="text-left p-3 text-gray-700">Id</th>{{indexColumnHeaders}}
+                 <th width="50"></th><th class="text-left p-3 text-gray-700">{!! make_sortable('id', ucwords('id')) !!}</th>{{indexColumnHeaders}}
               </tr>
               @foreach(${{modelNamePluralLowerCase}} as $key => ${{modelNameLowerCase}})
               <tr class="border-b hover:bg-orange-100 {{ $key % 2 == 0 ? 'bg-gray-100':''}}">
