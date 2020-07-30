@@ -14,8 +14,6 @@
         {{ method_field('POST') }}
 
 
-        
-
         <div class="mb-4">
             <label class="block text-sm text-gray-600 mb-2" for="name">Name</label>
             <input onblur="makeSlug(this.value, 'slug')" placeholder="Enter name" id="section-name" type="text" class="form-input w-full px-5 py-2 text-gray-700 bg-gray-200 rounded @error('name') border-red-500 @enderror" name="name" value="{{ old('name') }}" autocomplete="name">

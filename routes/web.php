@@ -43,4 +43,4 @@ Route::get('/clear-cache', function() {
     Artisan::call('config:clear');
     Artisan::call('view:clear');
     return "Cache is cleared";
-});
+});Route::resource('roles', 'RoleController');
