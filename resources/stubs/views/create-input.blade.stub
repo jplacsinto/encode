@@ -1,11 +1,9 @@
-<div class="form-group row">
-    <label class="col-sm-2 col-form-label">{{fieldNameUpperCase}}</label>
-    <div class="col-sm-10">
-        <input placeholder="Enter {{fieldNameLowerCase}}" type="text" class="form-control @error('{{fieldNameLowerCase}}') is-invalid @enderror" name="{{fieldNameLowerCase}}" value="{{ old('{{fieldNameLowerCase}}') }}">
-        @error('{{fieldNameLowerCase}}')
-        <span class="invalid-feedback" role="alert">
+<div class="mb-4">
+    <label class="block text-sm text-gray-600 mb-2" for="{{fieldNameLowerCase}}">{{fieldNameUpperCase}}</label>
+    <input placeholder="Enter {{fieldNameLowerCase}}" id="{{fieldNameLowerCase}}" type="text" class="form-input w-full px-5 py-2 text-gray-700 bg-gray-200 rounded @error('{{fieldNameLowerCase}}') border-red-500 @enderror" name="{{fieldNameLowerCase}}" value="{{ old('{{fieldNameLowerCase}}') }}" autocomplete="{{fieldNameLowerCase}}">
+    @error('{{fieldNameLowerCase}}')
+        <p class="text-red-500 text-xs">
             <strong>{{ $message }}</strong>
-        </span>
-        @enderror
-    </div>
+        </p>
+    @enderror
 </div>

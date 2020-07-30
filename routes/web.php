@@ -18,7 +18,8 @@ Route::get('/', function () {
     //return view('welcome');
 });
 
-Auth::routes();
+
+Auth::routes(['register' => false]);
 
 //Route::get('/home', 'HomeController@index')->name('home');
 
@@ -30,5 +31,20 @@ Route::middleware('auth')->group(function(){
 	Route::resource('sections', 'SectionController')->middleware('can:manage-sections');
 
 	Route::resource('articles', 'ArticleController')->middleware('can:manage-articles');
+
+    Route::resource('roles', 'RoleController');
+
+    Route::resource('authors', 'AuthorController');
 	
 });
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/clear-cache', function() {
+    Artisan::call('cache:clear');
+    Artisan::call('route:clear');
+    Artisan::call('config:clear');
+    Artisan::call('view:clear');
+    return "Cache is cleared";
+});
+

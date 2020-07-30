@@ -1,1 +1,1 @@
-<td>{{ ${{modelNameLowerCase}}->{{fieldName}} }}</td>
+<td class="p-3">{{ ${{modelNameLowerCase}}->{{fieldName}} }}</td>

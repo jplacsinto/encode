@@ -9,12 +9,12 @@
      <div class="mb-4 flex justify-between items-center">
         <div class="flex-1 pr-4">
            <span class="text-xl items-center">
-           <i class="fas fa-list mr-3"></i> {{modelNameTitle}}
+           <i class="fas fa-list mr-3"></i> Roles
            </span>
-           <a href="{{route('{{modelNamePluralLowerCase}}.create')}}" type="button" class="ml-4 bg-transparent hover:bg-blue-700 text-blue-500 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"><i class="fas fa-plus mr-2"></i>New</a>
+           <a href="{{route('roles.create')}}" type="button" class="ml-4 bg-transparent hover:bg-blue-700 text-blue-500 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"><i class="fas fa-plus mr-2"></i>New</a>
         </div>
         <div class="flex-1">
-           <form class="relative" method="GET" action="{{route('{{modelNamePluralLowerCase}}.index')}}">
+           <form class="relative" method="GET" action="{{route('roles.index')}}">
               <input type="search" name="search"
                  class="w-full pl-10 pr-4 py-2 rounded-lg shadow focus:outline-none focus:shadow-outline text-gray-600 font-medium" placeholder="Search..." value="{{request('search')}}">
               <div class="absolute top-0 left-0 inline-flex items-center p-2">
@@ -33,9 +33,11 @@
         <table class="w-full mb-5">
            <tbody>
               <tr class="border-b">        
-                 <th width="50"></th><th class="text-left p-3 text-gray-700">{!! make_sortable('id', ucwords('id')) !!}</th>{{indexColumnHeaders}}
+                 <th width="50"></th><th class="text-left p-3 text-gray-700">{!! make_sortable('id', ucwords('id')) !!}</th>
+        				<th class="text-left p-3 text-gray-700">{!! make_sortable('name', ucwords('name')) !!}</th>
+                <th class="text-left p-3 text-gray-700">Access</th>
               </tr>
-              @foreach(${{modelNamePluralLowerCase}} as $key => ${{modelNameLowerCase}})
+              @foreach($roles as $key => $role)
               <tr class="border-b hover:bg-orange-100 {{ $key % 2 == 0 ? 'bg-gray-100':''}}">
                  <td class="pl-3">
                    
@@ -47,17 +49,19 @@
 
                       <button x-show="isOpen" @click="isOpen = false" class="h-full w-full fixed inset-0 left-40 cursor-default"></button>
                       <div x-show="isOpen" class="absolute w-32 bg-white rounded-lg shadow-lg py-2 ml-10 text-sm">
-                          <a href="{{ route('{{modelNamePluralLowerCase}}.edit', ${{modelNameLowerCase}}->id) }}" title="edit" class="block px-4 py-1 hover:bg-gray-300 text-gray-700">
+                          <a href="{{ route('roles.edit', $role->id) }}" title="edit" class="block px-4 py-1 hover:bg-gray-300 text-gray-700">
                             <i class="fa fa-edit mr-1"></i> Edit
                           </a>
-                          <a href="#" title="Delete" data-name="{{ ${{modelNameLowerCase}}->name }}" data-action="{{ route('{{modelNamePluralLowerCase}}.destroy', ${{modelNameLowerCase}}->id) }}" class="block px-4 py-1 modal-open hover:bg-gray-300 text-gray-700">
+                          <a href="#" title="Delete" data-name="{{ $role->name }}" data-action="{{ route('roles.destroy', $role->id) }}" class="block px-4 py-1 modal-open hover:bg-gray-300 text-gray-700">
                             <i class="fa fa-ban mr-1"></i> Delete
                           </a>
                       </div>
                   </div>
 
                  </td>
-                 <td class="p-3">{{ ${{modelNameLowerCase}}->id }}</td>{{indexColumns}}
+                 <td class="p-3">{{ $role->id }}</td>
+				         <td class="p-3">{{ $role->name }}</td>
+                 <td class="p-3"></td>
               </tr>
               @endforeach
            </tbody>
@@ -70,7 +74,7 @@
               <option {{ request('rows') == 50 ? 'selected':'' }} value="{{ add_query_params(['rows'=>50]) }}">50</option>
             </select>
             <div class="flex-1">
-            {{ ${{modelNamePluralLowerCase}}->withQueryString()->links() }}
+            {{ $roles->withQueryString()->links() }}
           </div>
         </div>
 

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class {{modelName}}Request extends FormRequest
+class RoleRequest extends FormRequest
 {
     public function authorize()
     {
@@ -14,7 +14,7 @@ class {{modelName}}Request extends FormRequest
     public function rules()
     {
         return [
-        	{{rules}}
+            'name' => 'required|max:255'
         ];
     }
 }
