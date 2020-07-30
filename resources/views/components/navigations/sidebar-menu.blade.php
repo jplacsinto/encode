@@ -15,7 +15,7 @@
           
           Articles
       </a>
-      <a href="{{route('authors.index')}}" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 px-6 nav-item">
+      <a href="{{-- {{route('authors.index')}} --}}" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 px-6 nav-item">
           <i class="fas fa-user-circle mr-3"></i>
           Authors
       </a>
